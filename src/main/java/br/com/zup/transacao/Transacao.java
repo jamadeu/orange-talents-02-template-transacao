@@ -17,10 +17,10 @@ public class Transacao {
 
     private LocalDateTime efetivadaEm;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE)
     private Cartao cartao;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE)
     private Estabelicimento estabelicimento;
 
     @Deprecated
