@@ -31,7 +31,7 @@ public class TransacaoController {
     public ResponseEntity<?> buscaPorCartao(@PathVariable("id") String idCartao) {
         logger.info("Busca transacao por idCartao = {}", idCartao);
 
-        List<Transacao> transacoes = transacaoRepository.findByCartaoIdCartaoOrderByEfetivadaEmDesc(idCartao);
+        List<Transacao> transacoes = transacaoRepository.findFirst10ByCartaoIdCartaoOrderByEfetivadaEmDesc(idCartao);
         if (transacoes.isEmpty()) {
             logger.info("Nenhuma transacao localizada para o cartao {}", idCartao);
             return ResponseEntity.notFound().build();
@@ -40,9 +40,6 @@ public class TransacaoController {
         List<TransacaoListaResponse> responses = new ArrayList<>();
         for (Transacao transacao : transacoes) {
             responses.add(new TransacaoListaResponse(transacao));
-            if (responses.size() == 10) {
-                break;
-            }
         }
 
         logger.info("Transacaoes localizadas {}", responses);

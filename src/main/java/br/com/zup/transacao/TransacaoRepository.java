@@ -8,5 +8,5 @@ import java.util.List;
 @Repository
 public interface TransacaoRepository extends JpaRepository<Transacao, Long> {
 
-    List<Transacao> findByCartaoIdCartaoOrderByEfetivadaEmDesc(String idCartao);
+    List<Transacao> findFirst10ByCartaoIdCartaoOrderByEfetivadaEmDesc(String idCartao);
 }
