@@ -22,7 +22,7 @@ public class ListenerDeTransacao {
         logger.info("Nova mensagem {}", transacaoResponse);
         Transacao transacao = transacaoResponse.toModel();
         transacaoRepository.save(transacao);
-        logger.info("Nova transacao {}", transacao);
+        logger.info("Transacao {}", transacao);
         System.out.println(transacaoResponse);
     }
 }

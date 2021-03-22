@@ -1,6 +1,6 @@
 package br.com.zup.transacao;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 
 @Embeddable
 public class Cartao {

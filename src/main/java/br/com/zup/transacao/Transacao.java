@@ -3,6 +3,7 @@ package br.com.zup.transacao;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Transacao {
@@ -57,5 +58,18 @@ public class Transacao {
 
     public Estabelicimento getEstabelicimento() {
         return estabelicimento;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transacao transacao = (Transacao) o;
+        return getIdTransacao().equals(transacao.getIdTransacao()) && getValor().equals(transacao.getValor()) && getEfetivadaEm().equals(transacao.getEfetivadaEm()) && getCartao().equals(transacao.getCartao()) && getEstabelicimento().equals(transacao.getEstabelicimento());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIdTransacao(), getValor(), getEfetivadaEm(), getCartao(), getEstabelicimento());
     }
 }
