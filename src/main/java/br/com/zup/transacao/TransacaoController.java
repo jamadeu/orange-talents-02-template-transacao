@@ -37,9 +37,12 @@ public class TransacaoController {
             return ResponseEntity.notFound().build();
         }
 
-        List<TransacaoBuscaPorCartaoResponse> responses = new ArrayList<>();
-        for (int i = 0; i <= 10; i++) {
-            responses.add(new TransacaoBuscaPorCartaoResponse(transacoes.get(i)));
+        List<TransacaoListaResponse> responses = new ArrayList<>();
+        for (Transacao transacao : transacoes) {
+            responses.add(new TransacaoListaResponse(transacao));
+            if (responses.size() == 10) {
+                break;
+            }
         }
 
         logger.info("Transacaoes localizadas {}", responses);

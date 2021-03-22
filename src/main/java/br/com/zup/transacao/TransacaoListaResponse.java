@@ -3,14 +3,14 @@ package br.com.zup.transacao;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class TransacaoBuscaPorCartaoResponse {
+public class TransacaoListaResponse {
     private final String id;
     private final BigDecimal valor;
     private final String nomeEstabelecimento;
     private final String idCartao;
     private final LocalDateTime efetivadaEm;
 
-    public TransacaoBuscaPorCartaoResponse(Transacao transacao) {
+    public TransacaoListaResponse(Transacao transacao) {
         this.id = transacao.getIdTransacao();
         this.valor = transacao.getValor();
         this.nomeEstabelecimento = transacao.getEstabelicimento().getNome();
