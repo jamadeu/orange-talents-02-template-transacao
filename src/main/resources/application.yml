@@ -6,6 +6,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: ${KAFKA_CONSUMER_GROUP_ID:minha-aplicacao}
       auto-offset-reset: ${KAFKA_AUTO-OFFSET-RESET:latest}
+    topic.transactions: ${KAFKA_TOPIC_TRANSACTIONS:transacoes}
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
