@@ -1,5 +1,7 @@
 package br.com.zup.transacao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +17,8 @@ import java.util.List;
 @RequestMapping("api/v1/transacoes")
 public class TransacaoController {
 
+    private final Logger logger = LoggerFactory.getLogger(TransacaoController.class);
+
     private final TransacaoRepository transacaoRepository;
 
     @Autowired
@@ -25,9 +29,11 @@ public class TransacaoController {
     @GetMapping("/cartao/{id}")
     @Transactional(readOnly = true)
     public ResponseEntity<?> buscaPorCartao(@PathVariable("id") String idCartao) {
+        logger.info("Busca transacao por idCartao = {}", idCartao);
 
         List<Transacao> transacoes = transacaoRepository.findByCartaoIdCartaoOrderByEfetivadaEmDesc(idCartao);
         if (transacoes.isEmpty()) {
+            logger.info("Nenhuma transacao localizada para o cartao {}", idCartao);
             return ResponseEntity.notFound().build();
         }
 
@@ -36,6 +42,7 @@ public class TransacaoController {
             responses.add(new TransacaoBuscaPorCartaoResponse(transacoes.get(i)));
         }
 
+        logger.info("Transacaoes localizadas {}", responses);
         return ResponseEntity.ok(responses);
     }
 
