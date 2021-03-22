@@ -2,12 +2,8 @@ package br.com.zup.transacao;
 
 import javax.persistence.*;
 
-@Entity
+@Embeddable
 public class Cartao {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String idCartao;
 

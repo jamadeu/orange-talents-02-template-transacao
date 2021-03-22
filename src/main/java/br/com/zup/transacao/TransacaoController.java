@@ -1,40 +1,42 @@
 package br.com.zup.transacao;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.awt.print.Pageable;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/transacoes")
 public class TransacaoController {
 
     private final TransacaoRepository transacaoRepository;
-    private final CartaoRepository cartaoRepository;
 
-    public TransacaoController(TransacaoRepository transacaoRepository, CartaoRepository cartaoRepository) {
+    @Autowired
+    public TransacaoController(TransacaoRepository transacaoRepository) {
         this.transacaoRepository = transacaoRepository;
-        this.cartaoRepository = cartaoRepository;
     }
 
     @GetMapping("/cartao/{id}")
     @Transactional(readOnly = true)
-    public ResponseEntity<?> buscaPorCartao(@PathVariable("id") Long idCartao, @PageableDefault Pageable pageable) {
-        Cartao cartao = cartaoRepository.findById(idCartao)
-                .orElseThrow(() -> {
-                    throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cartao nao encontrado");
-                });
+    public ResponseEntity<?> buscaPorCartao(@PathVariable("id") String idCartao) {
 
-        Page<Transacao> transacoes = transacaoRepository.findByCartao(cartao, pageable);
-        return ResponseEntity.ok(transacoes);
+        List<Transacao> transacoes = transacaoRepository.findByCartaoIdCartaoOrderByEfetivadaEmDesc(idCartao);
+        if (transacoes.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<TransacaoBuscaPorCartaoResponse> responses = new ArrayList<>();
+        for (int i = 0; i <= 10; i++) {
+            responses.add(new TransacaoBuscaPorCartaoResponse(transacoes.get(i)));
+        }
+
+        return ResponseEntity.ok(responses);
     }
 
 }

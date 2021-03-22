@@ -1,4 +1,4 @@
-package br.com.zup.transacao;
+package br.com.zup.transacao.compartilhado;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

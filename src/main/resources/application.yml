@@ -8,15 +8,27 @@ spring:
       auto-offset-reset: ${KAFKA_AUTO-OFFSET-RESET:latest}
 
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test
-    username: sa
-    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/transaction?createDatabaseIfNotExist=true
+    username: root
+    password: root
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate.ddl-auto: update
 
   security.oauth2.resourceserver.jwt:
     issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:18080/auth/realms/proposta}
     jwk-set-uri: ${KEYCLOAK_JWKS_URI:http://localhost:18080/auth/realms/proposta/protocol/openid-connect/certs}
+
+management:
+  endpoints:
+    health:
+      show-details: always
+    web:
+      exposure:
+        include: info,metrics,health
+  endpoint:
+    health:
+      probes:
+        enabled: true
